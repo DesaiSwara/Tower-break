@@ -5,7 +5,11 @@ const Constraint = Matter.Constraint;
 
 var  stage1, stage2;
 var block1,block2,block3,block3,block4,block5,block6,block7,block8,block9,block10,block11,block12,block13,block14,block15,block16,block17,block18;
-var polygon,slingShot;
+var polygon,slingShot,polygon_image;
+
+function preload () {
+  polygon_image=loadImage("polygon.png");
+}
 
 function setup() {
   var canvas=createCanvas(1600,800);
@@ -14,8 +18,6 @@ function setup() {
 
   stage1=new Stage (1000,335,250,20);
   stage2=new Stage (700,585,250,20);
-
-  slingShot=new SlingShot (polygon.body,{x:200,y:200})
 
   block1=new Block (1000,200,40,50);
   block2=new Block (1000,250,40,50);
@@ -36,8 +38,11 @@ function setup() {
   block16=new Block (740,550,40,50);
   block17=new Block (620,550,40,50);
   block18=new Block (780,550,40,50);
+ 
+  polygon=Bodies.circle(50,200,20);
+  World.add(world,polygon);
 
-  polygon=new Polygon (200,200,50,50);
+ slingShot=new SlingShot (this.polygon,{x:200,y:200})
 
   
 }
@@ -48,8 +53,11 @@ function draw() {
   stage1.display();
   stage2.display();
 
-  polygon.display();
 
+  
+  fill("gold");
+  imageMode(CENTER);
+  image(polygon_image,polygon.position.x,polygon.position.y,100,100);
   slingShot.display();
 
   block1.display();
@@ -75,10 +83,13 @@ function draw() {
 }
 
 function mouseDragged(){
-  Matter.Body.setPosition(polygon.body,{x:mouseX,y:mouseY});
+  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
  
  }
+
  function mouseReleased(){
-     slingShot.fly();
+  slingShot.fly();
+  console.log(true);
+  
+}
  
- }
