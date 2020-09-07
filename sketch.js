@@ -7,15 +7,17 @@ var  stage1, stage2;
 var block1,block2,block3,block3,block4,block5,block6,block7,block8,block9,block10,block11,block12,block13,block14,block15,block16,block17,block18;
 var polygon,slingShot,polygon_image;
 
-function preload () {
-  polygon_image=loadImage("polygon.png");
+function preload(){
+  polygon_img=loadImage("polygon.png");
 }
-
 function setup() {
-  var canvas=createCanvas(1600,800);
+  createCanvas(1600,600);
   engine = Engine.create();
   world = engine.world;
-
+  Engine.run(engine);
+ 
+ 
+ 
   stage1=new Stage (1000,335,250,20);
   stage2=new Stage (700,585,250,20);
 
@@ -38,33 +40,29 @@ function setup() {
   block16=new Block (740,550,40,50);
   block17=new Block (620,550,40,50);
   block18=new Block (780,550,40,50);
- 
-  polygon=Bodies.circle(50,200,20);
+
+
+  polygon = Bodies.circle(50,200,20);
   World.add(world,polygon);
-
- slingShot=new SlingShot (this.polygon,{x:200,y:200})
-
   
-}
+  slingShot = new Slingshot(this.polygon,{x:100,y:200});
 
+}
 function draw() {
-  background(255,255,255);  
+  background(56,44,44); 
+ 
+  text("Press Space to get a second Chance to Play!!",700 ,100);
+  textSize(100);
 
   stage1.display();
   stage2.display();
-
-
-  
-  fill("gold");
-  imageMode(CENTER);
-  image(polygon_image,polygon.position.x,polygon.position.y,100,100);
-  slingShot.display();
-
+ 
   block1.display();
   block2.display();
   block3.display();
   block4.display();
   block5.display();
+
   block6.display();
   block7.display();
   block8.display();
@@ -73,23 +71,28 @@ function draw() {
   block10.display();
   block11.display();
   block12.display();
+
   block13.display();
   block14.display();
   block15.display();
   block16.display();
   block17.display();
   block18.display();
-  drawSprites();
-}
+  fill("gold");
+  imageMode(CENTER)
+  image(polygon_img ,polygon.position.x,polygon.position.y,40,100,20);
 
-function mouseDragged(){
-  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
- 
- }
-
- function mouseReleased(){
-  slingShot.fly();
-  console.log(true);
+  slingShot.display();
   
 }
- 
+function mouseDragged(){
+  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
+}
+function mouseReleased(){
+  slingShot.fly();
+}
+function keyPressed(){
+  if(keyCode === 32){
+      slingShot.attach(this.polygon);
+  }
+}
