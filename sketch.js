@@ -6,9 +6,12 @@ const Constraint = Matter.Constraint;
 var  stage1, stage2;
 var block1,block2,block3,block3,block4,block5,block6,block7,block8,block9,block10,block11,block12,block13,block14,block15,block16,block17,block18;
 var polygon,slingShot,polygon_image;
+var score=0;
+var backgroundImg,bg;
 
 function preload(){
   polygon_img=loadImage("polygon.png");
+  getBackgroundImg();
 }
 function setup() {
   createCanvas(1600,600);
@@ -16,7 +19,7 @@ function setup() {
   world = engine.world;
   Engine.run(engine);
  
- 
+ text("SCORE:"+score,750,40)
  
   stage1=new Stage (1000,335,250,20);
   stage2=new Stage (700,585,250,20);
@@ -46,6 +49,25 @@ function setup() {
   World.add(world,polygon);
   
   slingShot = new Slingshot(this.polygon,{x:100,y:200});
+
+  block1.score();
+  block2.score();
+  block3.score();
+  block4.score();
+  block5.score();
+  block6.score();
+  block7.score();
+  block8.score();
+  block9.score();
+  block10.score();
+  block11.score();
+  block12.score();
+  block13.score();
+  block14.score();
+  block15.score();
+  block16.score();
+  block17.score();
+  block18.score();
 
 }
 function draw() {
@@ -95,4 +117,20 @@ function keyPressed(){
   if(keyCode === 32){
       slingShot.attach(this.polygon);
   }
+}
+
+async function getBackgroundImg () {
+  var response = await fetch ("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  var responseJSON = await response.json();
+  console.log(responseJSON);
+  var date = responseJSON.datetime;
+  var hour = date.slice (11,13);
+  if (hour>=06 && hour<=18) {
+     bg = "dayImg.jpg";
+  } 
+  else{
+      bg= "nightImg.jpg";
+  }
+
+  backgroundImg=loadImage(bg);
 }
