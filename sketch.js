@@ -19,8 +19,6 @@ function setup() {
   world = engine.world;
   Engine.run(engine);
  
- text("SCORE:"+score,750,40)
- 
   stage1=new Stage (1000,335,250,20);
   stage2=new Stage (700,585,250,20);
 
@@ -50,35 +48,26 @@ function setup() {
   
   slingShot = new Slingshot(this.polygon,{x:100,y:200});
 
-  block1.score();
-  block2.score();
-  block3.score();
-  block4.score();
-  block5.score();
-  block6.score();
-  block7.score();
-  block8.score();
-  block9.score();
-  block10.score();
-  block11.score();
-  block12.score();
-  block13.score();
-  block14.score();
-  block15.score();
-  block16.score();
-  block17.score();
-  block18.score();
-
 }
 function draw() {
-  background(56,44,44); 
+  
+  if (backgroundImg) {
+   background(backgroundImg); 
+  }
+  
  
-  text("Press Space to get a second Chance to Play!!",700 ,100);
-  textSize(100);
+  textSize(20);
+  fill("black") 
+  text("Press Space to get a second chance to Play!!",700 ,40);
+  textSize(20);
+  fill("white")
+  text("SCORE:"+score,300,40)
 
+  fill("yellow")
   stage1.display();
   stage2.display();
  
+  fill("darkviolet")
   block1.display();
   block2.display();
   block3.display();
@@ -100,11 +89,31 @@ function draw() {
   block16.display();
   block17.display();
   block18.display();
+  
   fill("gold");
   imageMode(CENTER)
   image(polygon_img ,polygon.position.x,polygon.position.y,40,100,20);
 
   slingShot.display();
+
+  block1.score();
+  block2.score();
+  block3.score();
+  block4.score();
+  block5.score();
+  block6.score();
+  block7.score();
+  block8.score();
+  block9.score();
+  block10.score();
+  block11.score();
+  block12.score();
+  block13.score();
+  block14.score();
+  block15.score();
+  block16.score();
+  block17.score();
+  block18.score();
   
 }
 function mouseDragged(){
@@ -119,18 +128,20 @@ function keyPressed(){
   }
 }
 
-async function getBackgroundImg () {
-  var response = await fetch ("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+async function getBackgroundImg(){
+  var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
   var responseJSON = await response.json();
-  console.log(responseJSON);
-  var date = responseJSON.datetime;
-  var hour = date.slice (11,13);
-  if (hour>=06 && hour<=18) {
-     bg = "dayImg.jpg";
-  } 
+
+  var datetime = responseJSON.datetime;
+  var hour = datetime.slice(11,13);
+  
+  if(hour>=06 && hour<=19){
+      bg = "NightImg.jpg";
+  }
   else{
-      bg= "nightImg.jpg";
+      bg = "DayImg.jpg";
   }
 
-  backgroundImg=loadImage(bg);
+  backgroundImg = loadImage(bg);
+  
 }
